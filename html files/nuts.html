@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuts</title>
+    <link rel="stylesheet" href="../style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <nav id="nav">
+        <div class="navTop">
+            <div class="navItem">
+                <a href="index.html"><img src="../img/دار الباي (1) (1) logo.png" width="50" height="50" alt=""></a>
+ 
+            </div>
+            <div class="navItem">
+                <div class="search">
+                    <input type="text" placeholder="Search..." class="searchInput">
+                    <img src="../img/search icon.png" width="20" height="20" alt="" class="searchIcon">
+                </div>
+            </div>
+        </div>
+        <div class="menuItem">
+            <a href="../html files/cheese.html" class="menuItem">Cheese</a>
+            <a href="../html files/charcuterie.html" class="menuItem">Charcuterie</a>
+            <a href="../html files/nuts.html" class="menuItem">Nuts</a>
+            <a href="../html files/drinks.html" class="menuItem">Drinks</a>
+            <a href="../html files/chocolate.html" class="menuItem">Chocolate</a>
+        </div>
+        <style>
+            .menuItem a{
+                text-decoration: none;
+                color: aliceblue;
+                font-weight: 600;
+            }
+        </style>
+   </nav> 
+   <div class="content-container">
+</div>
+    <h1>Nuts</h1>
+    <div class="products">
+    </div>
+    <div class="cart">
+        <a href="#" class="cart-icon"><img src="../img/cart icon.png" alt="Cart" class="small-icon"></a>
+        <span class="cart-total">$0.00</span>
+    </div>
+    <style>
+        .cart{
+            margin-top: 120px;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <script src="../main.js"></script>
+    <script>
+        // each
+function each(coll, f) { 
+    if (Array.isArray(coll)) { 
+          for (var i = 0; i < coll.length; i++) { 
+                f(coll[i], i); 
+          } 
+    } else { 
+          for (var key in coll) { 
+                f(coll[key], key); 
+          } 
+    } 
+}
+
+
+// map
+function map(array, f) { 
+    var acc = []; 
+    each(array, function(element, i) { 
+          acc.push(f(element, i)); 
+    }); 
+    return acc; 
+}
+
+
+// filter
+function filter(array, predicate) {
+    var acc = [];
+    each(array, function(element) {
+        if (predicate(element)) {
+            acc.push(element);
+        }
+    });
+    return acc;
+}
+
+
+//reduce
+ function reduce(array, f, acc) { 
+       if (acc === undefined) { 
+             acc = array[0]; 
+             array = array.slice(1); 
+       } 
+       each(array, function(element, i) { 
+             acc = f(acc, element, i); 
+       }); 
+       return acc; 
+ }
+        $(document).ready(function () {
+            var products = [
+            { category: 'nuts', name: 'Almonds', price: 39, image: '/img/almond.jpg' },
+                { category: 'nuts', name: 'Hazelnuts', price: 40 , image: '/img/hazelnut.jpg'},
+                { category: 'nuts', name: 'Macadamias', price: 56 , image: '/img/macademias.jpg'},
+                { category: 'nuts', name: 'Pistachio', price: 90 , image: '/img/pistachio.jpg' },
+
+        ]
+            // Display products in the category
+            var productsContainer = $('.products');
+each(products, function(product) {
+    var productItem = $('<div class="product-item"></div>');
+    productItem.append('<h3>' + product.name + '</h3>');
+    productItem.append('<img src="' + product.image + '" alt="' + product.name + '" class="product-image">');
+    productItem.append('<p>Price: ' + product.price.toFixed(2) + ' dt</p>');
+    productItem.append('<button class="add-to-cart">Add to Cart</button>');
+    productItem.data('price', product.price);
+    productsContainer.append(productItem);
+});
+
+            // Add to cart functionality
+           var cartTotal = 0;
+            $('.products').on('click', '.add-to-cart', function () {
+                var price = $(this).closest('.product-item').data('price');
+                cartTotal += price;
+                $('.cart-total').text(`$${cartTotal.toFixed(2)}`);
+            });
+        });
+    </script>
+</body>
+</html>
